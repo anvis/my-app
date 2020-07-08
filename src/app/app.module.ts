@@ -1,16 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+
 import { AppComponent } from './app.component';
+import { AgGridModule } from 'ag-grid-angular';
+import {MutualFundHoldingComponent} from './mutual/mutual.component'
+import { mutualfundsholdingsService } from './Services/mutualfundsholdings.service';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent,MutualFundHoldingComponent],
   imports: [
-    BrowserModule
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    HttpClientModule,
+    FormsModule,
+    AgGridModule.withComponents([])
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [mutualfundsholdingsService],
+  bootstrap: [MutualFundHoldingComponent]
 })
-export class AppModule { }
+export class AppModule {}
