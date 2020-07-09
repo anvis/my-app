@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { AgGridModule } from 'ag-grid-angular';
 import {MutualFundHoldingComponent} from './mutual/mutual.component'
 import { mutualfundsholdingsService } from './Services/mutualfundsholdings.service';
+import 'ag-grid-enterprise';
 
 @NgModule({
   declarations: [AppComponent,MutualFundHoldingComponent],

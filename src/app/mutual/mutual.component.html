@@ -13,7 +13,8 @@
   <div >
     <ag-grid-angular style="width: 500px; height: 500px;"
                      class="ag-theme-alpine"
-                     [rowData]="rowData"
+                     [autoGroupColumnDef]="autoGroupColumnDef"
+                     [rowData]="restItems"
                      [columnDefs]="columnDefs">
     </ag-grid-angular>
 

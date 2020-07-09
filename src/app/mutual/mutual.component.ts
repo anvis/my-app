@@ -23,13 +23,14 @@ export class MutualFundHoldingComponent implements OnInit {
   }
 
   restItems: any;
+  rowData: any;
 
   ngOnInit() {
-   this.getRestItems();
+    this.rowData = this.getRestItems();
   }
 
   // Read all REST Items
-  getRestItems(): void {
+  getRestItems(): any {
     this._mutualfundsholdingsService.getAll()
       .subscribe(
         restItems => {
@@ -37,38 +38,26 @@ export class MutualFundHoldingComponent implements OnInit {
           console.log(this.restItems);
         }
       )
-  }
 
+      return this.restItems;
+  }
+   
 
   columnDefs = [
-    { headerName: 'Make', field: 'make', sortable: true, filter: true},
-    { headerName: 'Model', field: 'model', sortable: true, filter: true},
-    { headerName: 'Price', field: 'price', sortable: true, filter: true}
+    { headerName: 'Sector', field: 'sector', sortable: true, filter: true,rowGroup: true},
+    { headerName: 'stock Name', field: 'stockName', sortable: true, filter: true,rowGroup: true},
+    { headerName: 'Market cap', field: 'mcap', sortable: true, filter: true}
+   
   ];
 
-  rowData = [
-    { make: 'Toyota', model: 'Celica', price: 35000 },
-    { make: 'Ford', model: 'Mondeo', price: 32000 },
-    { make: 'Porsche', model: 'Boxter', price: 72000 },
-    { make: 'Toyota', model: 'Celica', price: 35000 },
-    { make: 'Ford', model: 'Mondeo', price: 32000 },
-    { make: 'Porsche', model: 'Boxter', price: 72000 },
-    { make: 'Toyota', model: 'Celica', price: 35000 },
-    { make: 'Ford', model: 'Mondeo', price: 32000 },
-    { make: 'Porsche', model: 'Boxter', price: 72000 },
-    { make: 'Toyota', model: 'Celica', price: 35000 },
-    { make: 'Ford', model: 'Mondeo', price: 32000 },
-    { make: 'Porsche', model: 'Boxter', price: 72000 },
-    { make: 'Toyota', model: 'Celica', price: 35000 },
-    { make: 'Ford', model: 'Mondeo', price: 32000 },
-    { make: 'Porsche', model: 'Boxter', price: 72000 },
-    { make: 'Toyota', model: 'Celica', price: 35000 },
-    { make: 'Ford', model: 'Mondeo', price: 32000 },
-    { make: 'Porsche', model: 'Boxter', price: 72000 },
-    { make: 'Toyota', model: 'Celica', price: 35000 },
-    { make: 'Ford', model: 'Mondeo', price: 32000 },
-    { make: 'Porsche', model: 'Boxter', price: 72000 }
+  autoGroupColumnDef = {
+    headerName: 'stock Name',
+    field: 'stockName',
+    cellRenderer: 'agGroupCellRenderer',
+    cellRendererParams: {
+        checkbox: true
+    }
+};
 
-  ];
-
+  
 }
