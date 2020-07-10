@@ -10,16 +10,22 @@ import { AgGridModule } from 'ag-grid-angular';
 import {MutualFundHoldingComponent} from './mutual/mutual.component'
 import { mutualfundsholdingsService } from './Services/mutualfundsholdings.service';
 import 'ag-grid-enterprise';
+import { HomeComponent } from './home/home.component';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
 
 @NgModule({
-  declarations: [AppComponent,MutualFundHoldingComponent],
+  declarations: [AppComponent,MutualFundHoldingComponent,HomeComponent,NavMenuComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([]),
+    RouterModule.forRoot([
+      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'mutual', component: MutualFundHoldingComponent }
+    ]),
   ],
   providers: [mutualfundsholdingsService],
-  bootstrap: [MutualFundHoldingComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
