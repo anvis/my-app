@@ -1,24 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-
 import { mutualfundsholdingsService } from '../Services/mutualfundsholdings.service';
+import {gridComponent} from '../Utilities/grid/grid.component';
 
 // @import './mixins';
 
 @Component({
   selector: 'app-root',
   templateUrl: './mutual.component.html',
-
-  //styleUrls: ['../../../../node_modules/ag-grid-community/src/styles/ag-grid.scss',
-  //            '../../../../node_modules/ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin.scss']
-  //styleUrls: ['./Grid.scss']
- // styleUrls: ['./app.component.scss']
   styleUrls: ['../app.component.scss']
   
 })
 export class MutualFundHoldingComponent implements OnInit {
 
-  constructor(private _mutualfundsholdingsService: mutualfundsholdingsService) {
-    //  this.getEmployees();
+  constructor(private _mutualfundsholdingsService: mutualfundsholdingsService) {  
   }
 
   restItems: any;

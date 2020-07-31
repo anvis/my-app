@@ -13,12 +13,17 @@
 
     <div>
         <table>
-            <tr *ngFor="let field of fieldArray; let i = index">
+            <tr *ngFor="let field of watchlists;">
                 <td>
-                    {{field}}
+                    {{field.watchListName}}
                 </td>
             </tr>
         </table>
+
+        <div style="width: 100%; height: 500px" >
+            <grid style="width: 100%; height: 500px" [gridData] = "watchlistsitems" [Columns] = "columnDefs"></grid>
+          </div>
+
     </div>
 </div>
 </div>

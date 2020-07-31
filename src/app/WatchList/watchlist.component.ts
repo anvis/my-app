@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { mutualfundsholdingsService } from '../Services/mutualfundsholdings.service';
+import { WatchListsService } from '../Services/WatchList.Service';
 
 // @import './mixins';
 
@@ -10,18 +10,18 @@ import { mutualfundsholdingsService } from '../Services/mutualfundsholdings.serv
 })
 export class WatchListComponent implements OnInit {
 
-  constructor(private _mutualfundsholdingsService: mutualfundsholdingsService) {
+  constructor(private _watchListService: WatchListsService) {
+
   }
 
 
   fieldArray: Array<any> = [];
-  newAttribute: any = {};
-
-  firstField = true;
-  firstFieldName = 'First Item name';
   isEditItems: boolean;
   NewWatchListName: string="";
-  tempWatchList: string;
+
+  
+  watchlists: any;
+  watchlistsitems: any;
 
   addFieldValue() {
     this.NewWatchListName = "";
@@ -32,10 +32,26 @@ export class WatchListComponent implements OnInit {
       this.isEditItems = false;
  this.fieldArray.push(this.NewWatchListName);
 }
+  ngOnInit() {
+    this.getWatchlist();  
+  } 
 
-  deleteFieldValue(index) {
-    this.fieldArray.splice(index, 1);
+  saveWatchList() {
+    this._watchListService.getAll();
   }
 
-  ngOnInit() {  } 
+  getWatchlist(): any {
+    this._watchListService.getAll()
+      .subscribe(
+        x => {
+          this.watchlistsitems = x;        
+        }
+      )
+      return this.watchlistsitems;
+  }
+
+  columnDefs = [
+    { headerName: 'Id', field: 'id'},
+    { headerName: 'WatchListName', field: 'watchListName'}   
+  ];
 }

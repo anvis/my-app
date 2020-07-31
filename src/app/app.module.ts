@@ -13,10 +13,11 @@ import { mutualfundsholdingsService } from './Services/mutualfundsholdings.servi
 import 'ag-grid-enterprise';
 import { HomeComponent } from './home/home.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { gridComponent } from './Utilities/grid/grid.component';
 
 @NgModule({
   declarations: [AppComponent,MutualFundHoldingComponent,
-    HomeComponent,NavMenuComponent,WatchListComponent],
+    HomeComponent,NavMenuComponent,WatchListComponent, gridComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,

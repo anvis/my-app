@@ -9,15 +9,8 @@
     <li *ngFor="let post of restItems" [innerHTML]="post.stockName">
     <li *ngFor="let post of restItems" [innerHTML]="post.mcapCategory">
     </li>
-  </ul>
-  <div >
-    <ag-grid-angular style="width: 500px; height: 500px;"
-                     class="ag-theme-alpine"
-                     [autoGroupColumnDef]="autoGroupColumnDef"
-                     [rowData]="restItems"
-                     [columnDefs]="columnDefs">
-    </ag-grid-angular>
+  </ul> 
 
-  </div>
+  <grid [gridData] = "restItems" [Columns] = "columnDefs" [AutoGroupColumnDef] = "autoGroupColumnDef" ></grid>
 
 </div>
