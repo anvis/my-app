@@ -14,7 +14,6 @@ import { mutualfundsholdingsService } from '../Services/mutualfundsholdings.serv
  // styleUrls: ['./app.component.scss']
   styleUrls: ['../app.component.scss']
   
-  
 })
 export class MutualFundHoldingComponent implements OnInit {
 

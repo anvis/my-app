@@ -2,8 +2,10 @@
 
 <div class="container">
     <br>
-    <div class="row">
 
+    <div id="borderDemo" >
+        <div>Add New WatchList</div>
+    <div class="row">
         <input *ngIf="isEditItems" [(ngModel)]="NewWatchListName" class="form-control" type="text" >
         <button *ngIf="!isEditItems"  type="button" (click)="addFieldValue()" style="margin-right:10px">Add WatchList</button>
         <button *ngIf="isEditItems" type="button" (click)="SaveFieldValue()" style="margin-right:10px">Save WatchList</button>
@@ -18,4 +20,5 @@
             </tr>
         </table>
     </div>
+</div>
 </div>
