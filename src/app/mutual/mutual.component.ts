@@ -27,7 +27,7 @@ export class MutualFundHoldingComponent implements OnInit {
     this._mutualfundsholdingsService.getAll()
       .subscribe(
         restItems => {
-          this.restItems = restItems;
+          this.restItems = restItems.body;
           console.log(this.restItems);
         }
       )

@@ -1,3 +1,10 @@
 #borderDemo {
     border: 5px solid #1C6EA4; height: 100%; width: 100%;
     }
+
+    // CSS Community
+//@import "../../node_modules/@ag-grid-communi";
+@import "../../node_modules/ag-grid-community/src/styles/ag-grid.scss";
+@import "../../node_modules/ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine.scss";
+
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";

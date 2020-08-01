@@ -29,7 +29,7 @@ import { gridComponent } from './Utilities/grid/grid.component';
       { path: 'watchList', component: WatchListComponent }
     ]),
   ],
-  providers: [mutualfundsholdingsService],
+  providers: [mutualfundsholdingsService, gridComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

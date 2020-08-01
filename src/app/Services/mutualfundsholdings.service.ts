@@ -9,9 +9,9 @@ export class mutualfundsholdingsService implements OnInit {
     }
     constructor(private common: CommonService, public sanitizer: DomSanitizer) { }
 
-    protected WatchListurl: string =  '/MutualFundHoldings/MutualFundHoldings';
+    protected Holdings: string =  '/MutualFundHoldings/MutualFundHoldings1';
 
    getAll() {
-    return this.common.get(this.WatchListurl);
+    return this.common.getFullResponse(this.Holdings);
   }
 }

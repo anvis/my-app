@@ -1,4 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,Output, EventEmitter } from '@angular/core';
+//import { GridOptions } from 'ag-grid-angular';
+//import {ColDef, ColumnApi, GridApi} from 'ag-grid/main';
+// import {GridOptions} from "@ag-grid-community/all-modules";
+import {GridOptions, GridApi, ColumnApi} from "ag-grid-community";
 
 @Component({
     selector: 'grid',
@@ -12,7 +16,48 @@ import { Component, OnInit, Input } from '@angular/core';
     ngOnInit(): void {
     }
 
-    @Input() gridData : any;
-    @Input() Columns : any;
+   @Input() gridData : any;
+   @Input() Columns : any;
    @Input() AutoGroupColumnDef : any;
+   @Output() editedValues = new EventEmitter<JSON>();
+   @Output() deletedValues = new EventEmitter<any[]>();
+   private gridOptions:GridOptions;
+   // gridApi = this.gridOptions.api;
+   private api: GridApi;
+   private columnApi: ColumnApi;
+
+   onCellValueChanged(params: any) {
+     debugger;
+     let d = params.data;
+     this.editedValues.emit(params.data);
+  }
+
+   rowsSelected() {
+    return this.api && this.api.getSelectedRows().length > 0;
+}
+deleteSelectedRows() {
+    const selectRows = this.api.getSelectedRows();
+    this.deletedValues.emit(selectRows);
+      }
+
+    onGridReady(params): void {
+      this.api = params.api;
+      this.columnApi = params.columnApi;
+
+      this.api.sizeColumnsToFit();
+
+      // temp fix until AG-1181 is fixed
+      this.api.hideOverlay();
+  }
+
+  public refreshGrid(data)
+  {
+    var params = {
+      force: true,
+      suppressFlash: true,
+      rowNodes: data,
+    };
+    this.api.refreshCells(params);
+
+  }
   }

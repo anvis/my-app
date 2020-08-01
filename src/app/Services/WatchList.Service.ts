@@ -12,10 +12,19 @@ export class WatchListsService implements OnInit {
     protected WatchListurl: string =  '/watchlist/watchlist';
     
  public  getAll() {
-    return this.common.get(this.WatchListurl);
+    return this.common.getJsonResponse(this.WatchListurl);
   }
 
   public  Post(data) {
     return this.common.Post(this.WatchListurl, data);
+  }
+
+  public Put(data) {
+    return this.common.Put(this.WatchListurl, data);
+  }
+
+  public Delete(Id) {
+    debugger;
+    return this.common.deleteWithId(this.WatchListurl, Id);
   }
 }

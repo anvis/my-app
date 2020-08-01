@@ -1,8 +1,17 @@
 <div >
     <ag-grid-angular style="width: 500px; height: 500px;"   
                      class="ag-theme-alpine"
+                     rowSelection="multiple"
+                     suppressRowClickSelection                     
                      [autoGroupColumnDef]="AutoGroupColumnDef"
                      [rowData]="gridData"
-                     [columnDefs]="Columns">
+                     [columnDefs]="Columns"
+                     (cellValueChanged)="onCellValueChanged($event)"
+                     (gridReady)="onGridReady($event)">
     </ag-grid-angular>
   </div>
+  <div>
+    <button (click)="deleteSelectedRows()" [disabled]="!rowsSelected()">
+            Delete Selected Row
+    </button>
+</div>
