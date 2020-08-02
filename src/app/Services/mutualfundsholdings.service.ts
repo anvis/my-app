@@ -9,7 +9,7 @@ export class mutualfundsholdingsService implements OnInit {
     }
     constructor(private common: CommonService, public sanitizer: DomSanitizer) { }
 
-    protected Holdings: string =  '/MutualFundHoldings/MutualFundHoldings1';
+    protected Holdings: string =  '/MutualFundHoldings/MutualFundHoldings';
 
    getAll() {
     return this.common.getFullResponse(this.Holdings);

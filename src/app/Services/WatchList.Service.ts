@@ -2,17 +2,22 @@ import { Injectable } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CommonService } from './Common/Common.service'
-
+import {BaseService } from './BaseService'
+ 
 @Injectable({ providedIn: 'root' }) 
 export class WatchListsService implements OnInit {
     ngOnInit(): void {
     }
-    constructor(private common: CommonService, public sanitizer: DomSanitizer) { }
+    constructor(private common: CommonService) { }
 
     protected WatchListurl: string =  '/watchlist/watchlist';
     
  public  getAll() {
     return this.common.getJsonResponse(this.WatchListurl);
+  }
+
+  public  getData() {
+    return this.common.getData(this.WatchListurl);
   }
 
   public  Post(data) {

@@ -1,0 +1,25 @@
+.column {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+  }
+
+  /* Clear floats after the columns */
+.maindiv{
+    float: left;
+    width: 100%;
+    padding: 10px;
+}
+::ng-deep .mat-select-panel.example-long-panel { 
+  max-height: 250px;
+ background-color: antiquewhite;
+ color: black;
+}
+
+.not-empty-select.mat-selected {
+  color: green !important;
+}
+
+:host /deep/ .mat-select-value-text {
+  color: green !important;
+}

@@ -14,7 +14,14 @@ export class CommonService implements OnInit {
       public url: string = 'https://localhost:44388/api';
       constructor(private http: HttpClient,) { }
 
-     public getJsonResponse(Endpoint)
+      public getData(Endpoint):Promise<any>
+      {
+        return this.http
+        .get<any>(this.url + Endpoint)
+        .pipe(map(data => data), retry(3), catchError(this.handleError)).toPromise();
+      } 
+
+      public getJsonResponse(Endpoint)
       {
         return this.http
         .get<any>(this.url + Endpoint)
@@ -33,14 +40,6 @@ export class CommonService implements OnInit {
         .post<any>(this.url + Endpoint, data)
         .pipe(map(data => data));
       }
-
-  /*    public deleteWithId(Endpoint : string, id: number) {
-        return this.http.delete<any>(this.url + Endpoint + "/" + id)
-          .pipe(
-            catchError(this.handleError)
-          );
-      }
-*/
 
 public deleteWithId(Endpoint : string, id: number) {
   return this.http.delete<any>(this.url + Endpoint + "/" + id, { observe: 'response' }).pipe(map(data => data),

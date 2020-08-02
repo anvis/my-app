@@ -18,6 +18,7 @@ export class WatchListComponent implements OnInit {
 
   watchlists: any;
   watchlistsitems: any;
+  
 data: any;
   addFieldValue() {
     this.NewWatchListName = "";
@@ -33,12 +34,9 @@ data: any;
   } 
 
   saveWatchList() {    
-    //this.watchlistsitems = "";
-   // this.watchlistsitems.push({ WatchListName: "sinema" });
     this.data =  { WatchListName: this.NewWatchListName };
     this._watchListService.Post(this.data).subscribe(hero => this.watchlistsitems.push(hero));
-   // api.refreshCells();
-   this.NewWatchListName = "";
+    this.NewWatchListName = "";
     this.isEditItems = false;
   }
 
