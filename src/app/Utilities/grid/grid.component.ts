@@ -26,8 +26,7 @@ import {GridOptions, GridApi, ColumnApi} from "ag-grid-community";
    private api: GridApi;
    private columnApi: ColumnApi;
 
-   onCellValueChanged(params: any) {
-     debugger;
+   onCellValueChanged(params: any) {     
      let d = params.data;
      this.editedValues.emit(params.data);
   }

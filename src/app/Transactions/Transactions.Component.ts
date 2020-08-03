@@ -18,15 +18,26 @@ export class TransactionComponent implements OnInit {
 
   constructor(private _transactionService: TransactionService, private _grid : gridComponent,
     private _watchListService: WatchListsService ) {
-  }
- // animalControl = new FormControl('', Validators.required);
-   
+  } 
   
  watchList:any[];
  watchlists : WatchList[]= [];
- watchliststemp : WatchList[] = [];
+ watchlists2 : WatchList[] = [];
+ watchlists2Removed : WatchList[] = [];
+ 
+
+ assign()
+{
+    alert('a')
+}
  getWatchList()
 {
+   let watchListObj = new WatchList();
+        watchListObj.name = "Un-Assigned";
+       watchListObj.id = "0";
+      
+  this.watchlists2.push(watchListObj);
+
     this._watchListService.getData().then(data =>{       
         this.watchList = data;
         if((this.watchList == [])){
@@ -39,6 +50,7 @@ export class TransactionComponent implements OnInit {
         watchListObj.name = element.watchListName;
        watchListObj.id = element.id;
   this.watchlists.push(watchListObj);
+  this.watchlists2.push(watchListObj);
     });
 }) 
 } 
@@ -47,19 +59,33 @@ export class TransactionComponent implements OnInit {
       debugger;
       this.getWatchList();
     this.getTransactions();  
-    this.names = ["Demavand", "Pradeep", "Ashutosh"];
+    //this.names = ["Demavand", "Pradeep", "Ashutosh"];
   } 
+
+  dropdownchangeevent(data : any) 
+  {
+    this.watchlists2Removed.forEach(element => {  
+        this.watchlists2.push(element);
+    });
+    this.watchlists2Removed = [];
+      var index = this.watchlists2.indexOf(data);
+      if(index > 0)
+      {
+      this.watchlists2.splice(index, 1);
+      this.watchlists2Removed.push(data);
+      }
+  }
+
+  dropdownchangeevent2(data : any) 
+  {
+          //  var index = this.watchlists.indexOf(data);
+      // this.watchlists2.splice(index, 1); 
+  }
 
   transactions: any;
   public names : any;
   
-  dropdownchangeevent(data : any) 
-  {
-      
-      debugger;
-      alert(data);
-
-  }
+  
   getTransactions(): any {
     this._transactionService.getAll()
       .subscribe(

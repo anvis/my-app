@@ -13,11 +13,12 @@
       <div class="column" >
         <h2>Column 2</h2>
         <p>Some text..</p>
-      
+        <mat-dropdown [values]="watchlists2" (dropdownchange) ="dropdownchangeevent2($event)"  ></mat-dropdown>
       </div>
       <div class="column" >
         <h2>Column 3</h2>
         <p>Some text..</p>
+        <button mat-raised-button color="primary" (click)="assign()">Assign</button>
       </div>
 </div>
 
