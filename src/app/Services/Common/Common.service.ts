@@ -21,6 +21,13 @@ export class CommonService implements OnInit {
         .pipe(map(data => data), retry(3), catchError(this.handleError)).toPromise();
       } 
 
+      public getDatawithId(Endpoint, id: number)
+      {
+        return this.http
+        .get<any>(this.url + Endpoint+ "/" + id,)
+        .pipe(map(data => data), retry(3), catchError(this.handleError));
+      } 
+
       public getJsonResponse(Endpoint)
       {
         return this.http

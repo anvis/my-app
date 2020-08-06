@@ -23,7 +23,7 @@ import {GridOptions, GridApi, ColumnApi} from "ag-grid-community";
    @Output() deletedValues = new EventEmitter<any[]>();
    private gridOptions:GridOptions;
    // gridApi = this.gridOptions.api;
-   private api: GridApi;
+   public api: GridApi;
    private columnApi: ColumnApi;
 
    onCellValueChanged(params: any) {     

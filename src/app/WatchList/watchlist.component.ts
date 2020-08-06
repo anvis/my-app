@@ -30,6 +30,9 @@ data: any;
  this.fieldArray.push(this.NewWatchListName);
 }
   ngOnInit() {
+    //alert('watch');
+//this._watchListService.test = this._watchListService.test + 1;
+//alert(this._watchListService.test);
     this.getWatchlist();  
   } 
 

@@ -5,15 +5,12 @@ import { CommonService } from './Common/Common.service'
 import {BaseService } from './BaseService'
  
 @Injectable({ providedIn: 'root' }) 
-export class WatchListsService implements OnInit {
-  //test: number = 1 ;
-
+export class StocksService implements OnInit {
     ngOnInit(): void {
-    //  this.test = this.test+1;
     }
     constructor(private common: CommonService) { }
 
-    protected WatchListurl: string =  '/watchlist/watchlist';
+    protected WatchListurl: string =  '/Stocks/Stocks';
     
  public  getAll() {
     return this.common.getJsonResponse(this.WatchListurl);

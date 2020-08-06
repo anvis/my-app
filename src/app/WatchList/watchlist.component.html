@@ -12,17 +12,19 @@
     </div>
 
     <div>
+        svsvsavsassf
         <table>
-            <tr *ngFor="let field of watchlists;">
+            <tr *ngFor="let field of watchlistsitems | filterStocksbyWatchListPipe : 'bbb'">
                 <td>
-                    {{field.watchListName}}
+                    f
+                    {{field.name}}
                 </td>
             </tr>
         </table>
 
         <div style="width: 100%; height: 500px" >
             <grid style="width: 100%; height: 500px"
-             [gridData] = "watchlistsitems" 
+             [gridData] = "watchlistsitems | filterStocksbyWatchListPipe : 'bbb'" 
              [Columns] = "columnDefs"
              (editedValues)="EditWatchList($event)"   
              (deletedValues)="DeleteWatchList($event)"          

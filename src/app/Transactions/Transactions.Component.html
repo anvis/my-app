@@ -1,31 +1,92 @@
+<table>
+  <tr>
+    <td colspan="4" style="width: 100%;">
+heuuu
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%;">
+      <b>
+        <mat-label>Create and Assign Transactions</mat-label>
+      </b>
+     
+    </td>
+<td style="width: 30%;">
+  <p><mat-label>Add TO WatchList:-</mat-label></p>
+  <mat-dropdown [values]="watchlists" (dropdownchange) ="dropdownchangeevent($event)"  ></mat-dropdown>
+</td>
+<td style="width: 30%;">
+  <p><mat-label>Filter WatchList:-</mat-label></p>
+  <mat-dropdown [values]="watchlists2" (dropdownchange) ="dropdownchangeevent2($event)"  ></mat-dropdown>
+</td>
+<td style="width: 10%;">
+  <button mat-raised-button color="primary" (click)="assign()">Assign</button>
+</td>
 
-<div class="maindiv">
-<div>
-    <div class="column" >
-        <p>Add TO WatchList:-</p>
+
+  </tr>
+  <tr>
+    
+
+      <td colspan="4" style="width: 100%;">
+        <grid style="width: 100%; height: 500px"
+                [gridData] = "gridTransactions" 
+                [Columns] = "columnDefs"           
+                ></grid>
+            
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%;">
+
+    </td>
+    <td style="width: 30%;">
+
+    </td>
+    <td style="width: 30%;">
+
+    </td>
+    <td style="width: 10%;">
+
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 30%;">
       
-        <mat-label>Toppings</mat-label>
-        <div >
-        <mat-label>ss</mat-label>
-        <mat-dropdown [values]="watchlists" (dropdownchange) ="dropdownchangeevent($event)"  ></mat-dropdown>
-        </div>
-      </div>
-      <div class="column" >
-        <h2>Column 2</h2>
-        <p>Some text..</p>
-        <mat-dropdown [values]="watchlists2" (dropdownchange) ="dropdownchangeevent2($event)"  ></mat-dropdown>
-      </div>
-      <div class="column" >
-        <h2>Column 3</h2>
-        <p>Some text..</p>
-        <button mat-raised-button color="primary" (click)="assign()">Assign</button>
-      </div>
-</div>
+      <button *ngIf="!addTransactions" mat-raised-button color="primary" (click)="addTransaction()">Add a Transaction</button>
+    </td>
+    <td style="width: 30%;">
+      
+    </td>
+    <td style="width: 30%;">
+      
+    </td>
+    <td style="width: 10%;">
+      <button *ngIf="addTransactions" mat-raised-button color="primary" (click)="saveTransaction()">Save a Transaction</button>
+    </td>
+  </tr>
 
-<div style="width: 100%; height: 500px" >
-    <grid style="width: 100%; height: 500px"
-     [gridData] = "transactions" 
-     [Columns] = "columnDefs"           
-     ></grid>
-  </div>
-</div>
+  <tr *ngIf="addTransactions">
+    <td style="width: 30%;">
+      Stocks:-
+      <mat-dropdown [values]="StocksList" (change)="changeClient($event.value)" ></mat-dropdown>
+    </td>
+    <td style="width: 30%;">
+      Quantity:- 
+      <input  [(ngModel)]="TransactionQuantity" class="form-control" type="text" >
+    </td>
+    <td style="width: 30%;">
+      Price:- 
+      <input  [(ngModel)]="TransactionPrice" class="form-control" type="text" >
+    </td>
+    <td style="width: 10%;">
+      Transactiontype:- 
+      <mat-dropdown [values]="TransactionType" [(ngModel)]="selectedTransactionType"></mat-dropdown>
+    </td>
+  </tr>
+
+</table>
+
+
+

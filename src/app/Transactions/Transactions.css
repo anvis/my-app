@@ -6,9 +6,7 @@
 
   /* Clear floats after the columns */
 .maindiv{
-    float: left;
-    width: 100%;
-    padding: 10px;
+        width: 100%;    
 }
 ::ng-deep .mat-select-panel.example-long-panel { 
   max-height: 250px;
@@ -23,3 +21,34 @@
 :host /deep/ .mat-select-value-text {
   color: green !important;
 }
+
+
+    .Table
+    {
+        display: table;
+    }
+    .Title
+    {
+        display: table-caption;
+        text-align: center;
+        font-weight: bold;
+        font-size: larger;
+    }
+    .Heading
+    {
+        display: table-row;
+        font-weight: bold;
+        text-align: center;
+    }
+    .Row
+    {
+        display: table-row;
+    }
+    .Cell
+    {
+        display: table-cell;
+        border: solid;
+        
+        padding-left: 5px;
+        padding-right: 5px;
+    }

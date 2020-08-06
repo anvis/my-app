@@ -1,40 +1,105 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { TransactionService } from '../Services/Transaction.Service';
 import {gridComponent } from '../Utilities/grid/grid.component';
 import {FormControl, Validators} from '@angular/forms';
 import { WatchListsService } from '../Services/WatchList.Service';
-
-class WatchList {
-    name: string;
-    id: string;
-  }
+import { WatchListStocksService } from '../Services/WatchListStocks.Service';
+import { StocksService } from '../Services/Stock.Service';
+import { Stocks } from '../Models/Stocks';
+import { Transactions , TransactionType} from '../Models/Transactions';
+import { WatchList, WatchListStocks } from '../Models/WatchList';
+import {DropDownModel } from '../Models/DropDownModel';
 
 @Component({
   selector: 'app-root',
   templateUrl: './Transactions.component.html',
   styleUrls: ['../app.component.scss', './Transactions.css' ]  
+  //providers: [WatchListsService]
 })
-export class TransactionComponent implements OnInit {
-
-  constructor(private _transactionService: TransactionService, private _grid : gridComponent,
+export class TransactionComponent implements AfterViewInit  {
+  constructor(private _transactionService: TransactionService, 
+    private _watchListStocksService: WatchListStocksService, 
+    private _grid : gridComponent,
+    private _stocksService : StocksService,
     private _watchListService: WatchListsService ) {
   } 
+
   
  watchList:any[];
- watchlists : WatchList[]= [];
- watchlists2 : WatchList[] = [];
- watchlists2Removed : WatchList[] = [];
+ watchlists : DropDownModel[]= [];
+ watchlists2 : DropDownModel[] = [];
+ watchlists2Removed : DropDownModel[] = [];
+ watchListIdToAdd : number = 0 ;
+ SelectedwatchListStocksList : WatchListStocks[] = [];
+ watchListStocksList : WatchListStocks[] = [];
+ addTransactions : boolean = false;
+ TransactionQuantity : number = 0;
+ TransactionPrice: number = 0 ;
+ TransactionType: TransactionType[] = this.getTransactionList();
+  transactions: Transactions[];
+  gridTransactions : Transactions[];
+saveTransactions : Transactions[];
+ Stocks : Stocks[] = [] ;
+ dropDownModel : DropDownModel[] = [];
+ StocksList : DropDownModel[] = [] ;
+ selectedStock : string;
  
+@ViewChild(gridComponent, {static: false}) grid: gridComponent;
+
+ngAfterViewInit() {
+  this.getWatchList();
+  this.getTransactions();
+  this.getStocks();  
+} 
 
  assign()
 {
-    alert('a')
+    let selectedRows =  this.grid.api.getSelectedRows();
+    selectedRows.forEach(element => {
+        let watchListStocksobj = new  WatchListStocks();
+    watchListStocksobj.WatchlistId = this.watchListIdToAdd;
+    watchListStocksobj.StockId = element.stockId;
+    watchListStocksobj.TransactionId = element.id;
+    this.SelectedwatchListStocksList.push(watchListStocksobj);
+    });
+    this._watchListStocksService.Post(this.SelectedwatchListStocksList).subscribe(hero => hero);
+}
+addTransaction()
+{
+  this.addTransactions = true;
+}
+
+saveTransaction()
+{
+  debugger;
+  this.addTransactions = false;
+let tran =  new Transactions();
+let d = this.selectedStock;
+  tran.stockId= 1;
+  tran.quantity= this.TransactionQuantity;
+  tran.price= this.TransactionPrice;
+  tran.transactionType= "s";
+  this.saveTransactions.push(tran);
+
+
+}
+changeClient(value) {
+  debugger;
+  console.log(value);
+  this.selectedStock = value;
+}
+
+getTransactionList()
+{
+
+  let trans = new Transactions();
+return trans.TransactionTypeList;
 }
  getWatchList()
 {
-   let watchListObj = new WatchList();
+       let watchListObj = new DropDownModel();
         watchListObj.name = "Un-Assigned";
-       watchListObj.id = "0";
+       watchListObj.id = 0;
       
   this.watchlists2.push(watchListObj);
 
@@ -46,26 +111,43 @@ export class TransactionComponent implements OnInit {
     })
     .then(response=>{
       this.watchList.forEach(element => {        
-        let watchListObj = new WatchList();
-        watchListObj.name = element.watchListName;
-       watchListObj.id = element.id;
-  this.watchlists.push(watchListObj);
-  this.watchlists2.push(watchListObj);
+        let dropDownModel = new DropDownModel();
+        dropDownModel.name = element.watchListName;
+        dropDownModel.id = element.id;
+  this.watchlists.push(dropDownModel);
+  this.watchlists2.push(dropDownModel);
     });
 }) 
 } 
 
-  ngOnInit() {
-      debugger;
-      this.getWatchList();
-    this.getTransactions();  
-    //this.names = ["Demavand", "Pradeep", "Ashutosh"];
-  } 
+getStocks()
+{
+    this._stocksService.getData().then(data =>{       
+        this.Stocks = data;
+        if((this.watchList == [])){
+           throw 'stop-operation'; 
+        }
+    })
+    .then(response=>{
+      this.Stocks.forEach(element => {        
+        let dropDownModel = new DropDownModel();
+        dropDownModel.name = element.stockName;
+        dropDownModel.id = element.stockId;
+  this.StocksList.push(dropDownModel);
+    });
+});
+}
 
-  dropdownchangeevent(data : any) 
+getWatchListStocks(id: number)
+{
+  this._watchListStocksService.getAllwithId(id).subscribe(data => this.watchListStocksList =  data);
+ return this.watchListStocksList;
+}
+
+  dropdownchangeevent(data : DropDownModel) 
   {
     this.watchlists2Removed.forEach(element => {  
-        this.watchlists2.push(element);
+    this.watchlists2.push(element);
     });
     this.watchlists2Removed = [];
       var index = this.watchlists2.indexOf(data);
@@ -74,22 +156,37 @@ export class TransactionComponent implements OnInit {
       this.watchlists2.splice(index, 1);
       this.watchlists2Removed.push(data);
       }
+     
+      this.watchListIdToAdd = data.id;
   }
 
-  dropdownchangeevent2(data : any) 
+  dropdownchangeevent2(data : DropDownModel) 
   {
-          //  var index = this.watchlists.indexOf(data);
-      // this.watchlists2.splice(index, 1); 
+    debugger;
+    let transactionsOfWatchList = this.getWatchListStocks(data.id);
+    this.gridTransactions = [];
+
+    transactionsOfWatchList.forEach(element => {      
+      debugger;
+this.gridTransactions.push( this.transactions.find(i=>i.id == element.transactionId));
+    });
+
+
+    //let findedData = this.transactions.find(i => i.id === data.id);
+   // if (typeof findedData === 'undefined') {
+   //    return null;
+   // }
+   // let watchListTransactions = this.transactions.find(i => i.id === data.);
+    // this.transactions = ;
   }
 
-  transactions: any;
-  public names : any;
-  
+ 
   
   getTransactions(): any {
     this._transactionService.getAll()
       .subscribe(
         x => {
+         this.gridTransactions = x;
           this.transactions = x;        
         }
       )
@@ -103,17 +200,11 @@ let x = value;
 
   }
 
-  columnDefs = [
-    {
- headerName: 'WatchListName', 
- field: 'id',
- editable: true,
- checkboxSelection: true
-},
+  columnDefs = [ 
 
 {
-    headerName: 'stock Id', 
-    field: 'stockId'
+    headerName: 'stock Name', 
+    field: 'stockName'
 },
 {
     headerName: 'quantity', 
