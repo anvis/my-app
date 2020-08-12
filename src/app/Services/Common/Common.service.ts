@@ -5,6 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+//import { debug } from 'console';
 
 @Injectable({ providedIn: 'root' }) 
 export class CommonService implements OnInit {
@@ -45,16 +46,17 @@ export class CommonService implements OnInit {
       {
         return this.http
         .post<any>(this.url + Endpoint, data)
-        .pipe(map(data => data));
+        .pipe(map(data => data), catchError(this.handleError));
       }
 
 public deleteWithId(Endpoint : string, id: number) {
-  return this.http.delete<any>(this.url + Endpoint + "/" + id, { observe: 'response' }).pipe(map(data => data),
+  return this.http.delete<any>(this.url + Endpoint + "/" + id).pipe(map(data => data),
     catchError(this.handleError)
   );
 }
-      public delete(Endpoint : string, data): Observable<{}> {
-        return this.http.delete(this.url + Endpoint, data)
+      public delete(Endpoint : string, data) {
+        debugger;
+        return this.http.delete<any>(this.url + Endpoint, data)
           .pipe(
             catchError(this.handleError)
           );
@@ -68,6 +70,7 @@ public deleteWithId(Endpoint : string, id: number) {
       }
 
       private handleError(error: HttpErrorResponse) {
+        
         if (error.error instanceof ErrorEvent) {
           // A client-side or network error occurred. Handle it accordingly.
           console.error('An error occurred:', error.error.message);

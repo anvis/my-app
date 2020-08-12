@@ -23,3 +23,12 @@ export class TransactionType
     id:number;
     name: string;
 }
+
+export class PostTransactions
+{
+    stockId : number;    
+    quantity : number;
+    price : number;
+    transactionType : string;
+
+}

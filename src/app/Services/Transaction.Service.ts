@@ -26,8 +26,11 @@ export class TransactionService implements OnInit {
     return this.common.Put(this.Transactionurl, data);
   }
 
-  public Delete(Id) {
-    debugger;
+  public DeleteWithId(Id) {
     return this.common.deleteWithId(this.Transactionurl, Id);
+  }
+
+  public Delete(data) {
+    return this.common.delete(this.Transactionurl, data);
   }
 }

@@ -6,9 +6,10 @@ import { WatchListsService } from '../Services/WatchList.Service';
 import { WatchListStocksService } from '../Services/WatchListStocks.Service';
 import { StocksService } from '../Services/Stock.Service';
 import { Stocks } from '../Models/Stocks';
-import { Transactions , TransactionType} from '../Models/Transactions';
+import { Transactions , TransactionType, PostTransactions} from '../Models/Transactions';
 import { WatchList, WatchListStocks } from '../Models/WatchList';
 import {DropDownModel } from '../Models/DropDownModel';
+//import { debug } from 'console';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +39,7 @@ export class TransactionComponent implements AfterViewInit  {
  TransactionType: TransactionType[] = this.getTransactionList();
   transactions: Transactions[];
   gridTransactions : Transactions[];
-saveTransactions : Transactions[];
+saveTransactions : PostTransactions[] = [] ;
  Stocks : Stocks[] = [] ;
  dropDownModel : DropDownModel[] = [];
  StocksList : DropDownModel[] = [] ;
@@ -71,18 +72,26 @@ addTransaction()
 
 saveTransaction()
 {
-  debugger;
   this.addTransactions = false;
-let tran =  new Transactions();
+let tran =  new PostTransactions();
 let d = this.selectedStock;
   tran.stockId= 1;
-  tran.quantity= this.TransactionQuantity;
-  tran.price= this.TransactionPrice;
+  tran.quantity= Number(this.TransactionQuantity);
+  tran.price= Number(this.TransactionPrice);
   tran.transactionType= "s";
-  this.saveTransactions.push(tran);
-
-
+  this.saveTransactions.push(tran);  
+this._transactionService.Post(this.saveTransactions).subscribe(data => (this.transactions =  data, this.gridTransactions = data));
 }
+
+deleteTransaction(Transactions: any[])
+{debugger;
+  Transactions.forEach(element => {
+    this._transactionService.DeleteWithId(element.id).subscribe(data => (this.transactions =  data, this.gridTransactions = data)); 
+  });
+ //this._transactionService.Delete(Transactions).subscribe(data => data); // (this.transactions =  data, this.gridTransactions = data));
+}
+
+
 changeClient(value) {
   debugger;
   console.log(value);
@@ -162,25 +171,13 @@ getWatchListStocks(id: number)
 
   dropdownchangeevent2(data : DropDownModel) 
   {
-    debugger;
     let transactionsOfWatchList = this.getWatchListStocks(data.id);
     this.gridTransactions = [];
 
-    transactionsOfWatchList.forEach(element => {      
-      debugger;
+    transactionsOfWatchList.forEach(element => { 
 this.gridTransactions.push( this.transactions.find(i=>i.id == element.transactionId));
     });
-
-
-    //let findedData = this.transactions.find(i => i.id === data.id);
-   // if (typeof findedData === 'undefined') {
-   //    return null;
-   // }
-   // let watchListTransactions = this.transactions.find(i => i.id === data.);
-    // this.transactions = ;
-  }
-
- 
+  } 
   
   getTransactions(): any {
     this._transactionService.getAll()
@@ -204,7 +201,8 @@ let x = value;
 
 {
     headerName: 'stock Name', 
-    field: 'stockName'
+    field: 'stockName',
+    checkboxSelection: true
 },
 {
     headerName: 'quantity', 
