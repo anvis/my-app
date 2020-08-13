@@ -1,20 +1,20 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { TransactionService } from '../Services/Transaction.Service';
-import {gridComponent } from '../Utilities/grid/grid.component';
+import { TransactionService } from '../../Services/Transaction.Service';
+import {gridComponent } from '../../Utilities/grid/grid.component';
 import {FormControl, Validators} from '@angular/forms';
-import { WatchListsService } from '../Services/WatchList.Service';
-import { WatchListStocksService } from '../Services/WatchListStocks.Service';
-import { StocksService } from '../Services/Stock.Service';
-import { Stocks } from '../Models/Stocks';
-import { Transactions , TransactionType, PostTransactions} from '../Models/Transactions';
-import { WatchList, WatchListStocks } from '../Models/WatchList';
-import {DropDownModel } from '../Models/DropDownModel';
-//import { debug } from 'console';
+import { WatchListsService } from '../../Services/WatchList.Service';
+import { WatchListStocksService } from '../../Services/WatchListStocks.Service';
+import { StocksService } from '../../Services/Stock.Service';
+import { Stocks } from '../../Models/Stocks';
+import { Transactions , PostTransactions} from '../../Models/Transactions';
+import { WatchList, WatchListStocks } from '../../Models/WatchList';
+//import {DropDownModel } from '../../Models/DropDownModel';
+import {DropDownModel, configuration } from  '../../Models/Configurations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './Transactions.component.html',
-  styleUrls: ['../app.component.scss', './Transactions.css' ]  
+  styleUrls: ['../../app.component.scss', './Transactions.css' ]  
   //providers: [WatchListsService]
 })
 export class TransactionComponent implements AfterViewInit  {
@@ -36,7 +36,7 @@ export class TransactionComponent implements AfterViewInit  {
  addTransactions : boolean = false;
  TransactionQuantity : number = 0;
  TransactionPrice: number = 0 ;
- TransactionType: TransactionType[] = this.getTransactionList();
+ TransactionType: DropDownModel[] = this.getTransactionList();
   transactions: Transactions[];
   gridTransactions : Transactions[];
 saveTransactions : PostTransactions[] = [] ;
@@ -100,9 +100,10 @@ changeClient(value) {
 
 getTransactionList()
 {
-
-  let trans = new Transactions();
-return trans.TransactionTypeList;
+  let config = new configuration();
+ return config.GetTransactionTypes();
+//;  let trans = new Transactions();
+//return trans.TransactionTypeList;
 }
  getWatchList()
 {

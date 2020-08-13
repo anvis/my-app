@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { WatchListsService } from '../Services/WatchList.Service';
-import {gridComponent } from '../Utilities/grid/grid.component';
+import { WatchListsService } from '../../Services/WatchList.Service';
+import {gridComponent } from '../../Utilities/grid/grid.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './watchlist.component.html',
-  styleUrls: ['../app.component.scss']  
+  styleUrls: ['../../app.component.scss']  
 })
 export class WatchListComponent implements OnInit {
 
