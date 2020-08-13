@@ -10,26 +10,30 @@ export class StocksService implements OnInit {
     }
     constructor(private common: CommonService) { }
 
-    protected WatchListurl: string =  '/Stocks/Stocks';
+    protected Stocksurl: string =  '/Stocks/Stocks';
+    protected Sectorsurl: string =  '/Stocks/Sectors';
     
  public  getAll() {
-    return this.common.getJsonResponse(this.WatchListurl);
+    return this.common.getJsonResponse(this.Stocksurl);
   }
 
   public  getData() {
-    return this.common.getData(this.WatchListurl);
+    return this.common.getData(this.Stocksurl);
   }
 
   public  Post(data) {
-    return this.common.Post(this.WatchListurl, data);
+    return this.common.Post(this.Stocksurl, data);
   }
 
   public Put(data) {
-    return this.common.Put(this.WatchListurl, data);
+    return this.common.Put(this.Stocksurl, data);
   }
 
   public Delete(Id) {
-    debugger;
-    return this.common.deleteWithId(this.WatchListurl, Id);
+    return this.common.deleteWithId(this.Stocksurl, Id);
+  }
+
+  public  getSectors() {
+    return this.common.getData(this.Sectorsurl);
   }
 }

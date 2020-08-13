@@ -9,7 +9,7 @@
       <tr>
         <td></td>
         <td>
-           <input type ="text" [(ngModel)]="name"  >
+           <input type ="text" [(ngModel)]="name">
 
         </td>
         <td></td>
@@ -20,24 +20,9 @@
       </tr>
       <tr>
         <td class="example-form">
-            ssad
-            <mat-form-field class="example-full-width">
-                <input type="text" [(ngModel)] = "selected"
-                       placeholder="Pick one"
-                       aria-label="Number"
-                       matInput
-                       [formControl]="myControl"
-                       [matAutocomplete]="auto">
-                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                    {{option}}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-        
+            ssad          
         </td>
         <td>
-            {{selected}}
         </td>
         <td></td>
         <td></td>
@@ -46,7 +31,9 @@
         <td></td>
       </tr>
       <tr>
-        <td></td>
+        <td>
+          vxvx
+          <mat-auto-dropdown [values]="options" (dropdownchange) ="dropdownchangeevent($event)"></mat-auto-dropdown></td>
         <td></td>
         <td></td>
         <td></td>

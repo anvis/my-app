@@ -8,7 +8,7 @@ import { StocksService } from '../../Services/Stock.Service';
 import { Stocks } from '../../Models/Stocks';
 import { Transactions , PostTransactions} from '../../Models/Transactions';
 import { WatchList, WatchListStocks } from '../../Models/WatchList';
-
+import { Sector } from '../../Models/Sector';
 import {DropDownModel } from  '../../Models/Configurations';
 
 import {Observable} from 'rxjs';
@@ -20,7 +20,7 @@ import {MatSelectModule} from '../../../../node_modules/@angular/material/select
   templateUrl: './Screener.Component.html',
   styleUrls: ['../../app.component.scss', './Screener.css' ]  
 })
-export class ScreenerComponent implements OnInit   {
+export class ScreenerComponent   {
   constructor(private _transactionService: TransactionService, 
     private _watchListStocksService: WatchListStocksService, 
     private _grid : gridComponent,
@@ -28,25 +28,28 @@ export class ScreenerComponent implements OnInit   {
     private _watchListService: WatchListsService ) 
     {
         //this.loadStates();
+        this.getSectors();
     }   
     name: string = '';
+    sectors: string[] = [];
+    sectorsList : Sector[] = [];
 
+    dropdownchangeevent(data) 
+    {
+      alert("23");
+    }
+
+
+    getSectors()
+    {
+      this._stocksService.getSectors().then(data =>{      debugger; 
+        this.sectorsList = data;
+      });
+    }
 
     // mat code
 
-    myControl = new FormControl();
+    
   options: string[] = ['One', 'Two', 'Three','One', 'Two', 'Three','One', 'Two', 'Three','One', 'Two', 'Three','One', 'Two', 'Three','One', 'Two', 'Three'];
-  filteredOptions: Observable<string[]>;
-  selected: string;
-  ngOnInit() {
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
-  }
+  
 }

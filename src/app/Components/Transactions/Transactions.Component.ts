@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { TransactionService } from '../../Services/Transaction.Service';
 import {gridComponent } from '../../Utilities/grid/grid.component';
-import {FormControl, Validators} from '@angular/forms';
 import { WatchListsService } from '../../Services/WatchList.Service';
 import { WatchListStocksService } from '../../Services/WatchListStocks.Service';
 import { StocksService } from '../../Services/Stock.Service';
 import { Stocks } from '../../Models/Stocks';
 import { Transactions , PostTransactions} from '../../Models/Transactions';
-import { WatchList, WatchListStocks } from '../../Models/WatchList';
+import { WatchListStocks } from '../../Models/WatchList';
 //import {DropDownModel } from '../../Models/DropDownModel';
 import {DropDownModel, configuration } from  '../../Models/Configurations';
 
@@ -15,7 +14,6 @@ import {DropDownModel, configuration } from  '../../Models/Configurations';
   selector: 'app-root',
   templateUrl: './Transactions.component.html',
   styleUrls: ['../../app.component.scss', './Transactions.css' ]  
-  //providers: [WatchListsService]
 })
 export class TransactionComponent implements AfterViewInit  {
   constructor(private _transactionService: TransactionService, 
@@ -84,7 +82,7 @@ this._transactionService.Post(this.saveTransactions).subscribe(data => (this.tra
 }
 
 deleteTransaction(Transactions: any[])
-{debugger;
+{
   Transactions.forEach(element => {
     this._transactionService.DeleteWithId(element.id).subscribe(data => (this.transactions =  data, this.gridTransactions = data)); 
   });
@@ -92,8 +90,7 @@ deleteTransaction(Transactions: any[])
 }
 
 
-changeClient(value) {
-  debugger;
+changeClient(value) { 
   console.log(value);
   this.selectedStock = value;
 }
@@ -102,8 +99,6 @@ getTransactionList()
 {
   let config = new configuration();
  return config.GetTransactionTypes();
-//;  let trans = new Transactions();
-//return trans.TransactionTypeList;
 }
  getWatchList()
 {

@@ -7,24 +7,19 @@ export class DropdownValue {
       this.label = label;
     }
   }
-
-  interface Animal {
-    name: string;
-    sound: string;
-  }
   
   import { Component, OnInit, Input,Output, EventEmitter } from '@angular/core';
-  import {MatSelectModule} from '../../../../node_modules/@angular/material/select';
+  //import {MatSelectModule} from '../../../../node_modules/@angular/material/select';
 
   @Component({
     selector: 'mat-dropdown',
     templateUrl: './Mat-dropdown.component.html'
   })
   export class MatDropdownComponent {
-    education_level;
+  education_level;
   @Input() values : any;
   value : any;
-    @Output() dropdownchange = new EventEmitter
+  @Output() dropdownchange = new EventEmitter
   
     constructor() {
     }

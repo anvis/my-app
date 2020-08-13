@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material/select';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {MatDropdownComponent} from './Tools/Dropdown/MatDropDown.Comonent';
+import {MapAutoDropdownComponent} from './Tools/Mat-AutoCompleteDropDown/AutoComplete.Component';
 import {StocksService} from './Services/Stock.Service';
 import { addHeader } from './Services/Interceptors/addHeader.Interceptor';
 import { responseInterceptor } from './Services/Interceptors/response.Interceptor';
@@ -30,7 +31,7 @@ import {MatInputModule} from '@angular/material/input';
 @NgModule({
   declarations: [AppComponent,MutualFundHoldingComponent,
     HomeComponent,NavMenuComponent,WatchListComponent, gridComponent,TransactionComponent,
-    DropdownComponent,MatDropdownComponent, ScreenerComponent,
+    DropdownComponent,MatDropdownComponent,MapAutoDropdownComponent, ScreenerComponent,
     filterStocksbyWatchListPipe],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
