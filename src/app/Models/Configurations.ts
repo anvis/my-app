@@ -10,7 +10,12 @@ export class configuration
 
     GetSegements()
     {  
-        return this.transTypes;
+        return this.categories;
+    }
+
+    GetPriceRanges()
+    {  
+        return this.priceRange;
     }
 
 

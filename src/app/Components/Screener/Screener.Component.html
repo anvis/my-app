@@ -19,27 +19,29 @@
         <td></td>
       </tr>
       <tr>
-        <td class="example-form">
-            ssad          
+        <td>
+            Segements        
         </td>
         <td>
+          <mat-dropdown [values]="stockSegements" (dropdownchange) ="segementsChanged($event)"  ></mat-dropdown>
         </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>Price Range</td>
+        <td>
+          <mat-dropdown [values]="priceRanges" (dropdownchange) ="segementsChanged($event)"  ></mat-dropdown>
+        </td>
+        <td>Sector</td>
+        <td>
+          <mat-auto-dropdown [values]="sectors" (dropdownchange) ="sectorsChanged($event)"></mat-auto-dropdown>
+        </td>
         <td></td>
       </tr>
       <tr>
-        <td>
+        <td colspan="7">
           vxvx
-          <mat-auto-dropdown [values]="options" (dropdownchange) ="dropdownchangeevent($event)"></mat-auto-dropdown></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+         
+        
+        </td>
+        
       </tr>
     </tbody>
     </table>

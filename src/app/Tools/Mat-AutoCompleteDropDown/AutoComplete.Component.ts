@@ -14,16 +14,16 @@ import {FormControl, Validators} from '@angular/forms';
    // options: string[] = ['One', 'Two', 'Three','One', 'Two', 'Three','One', 'Two', 'Three','One', 'Two', 'Three','One', 'Two', 'Three','One', 'Two', 'Three'];
     @Input() values : any;
     @Output() dropdownchange = new EventEmitter
-    filteredOptions: Observable<string[]>;
+    filteredOptions: Observable<any>;
     selected: string;
     ngOnInit() {
       this.filteredOptions = this.myControl.valueChanges.pipe(
-        startWith(''),
+        startWith(""),
         map(value => this._filter(value))
       );
     }
   
-    private _filter(value: string): string[] {
+    private _filter(value: string): any {
       const filterValue = value.toLowerCase();
       return this.values.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
     }
