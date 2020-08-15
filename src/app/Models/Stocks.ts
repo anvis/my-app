@@ -3,3 +3,11 @@ export class Stocks {
     stockName: string;
     closePrice: number;
   }
+
+  export class HoldingsGrid
+  {
+    sector:string;
+    stockName:string;
+    mcap:string;
+    mcapCategory:string;
+  }

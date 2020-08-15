@@ -5,11 +5,11 @@ import {FormControl, Validators} from '@angular/forms';
 import { WatchListsService } from '../../Services/WatchList.Service';
 import { WatchListStocksService } from '../../Services/WatchListStocks.Service';
 import { StocksService } from '../../Services/Stock.Service';
-import { Stocks } from '../../Models/Stocks';
+import { Stocks, HoldingsGrid } from '../../Models/Stocks';
 import { Transactions , PostTransactions} from '../../Models/Transactions';
 import { WatchList, WatchListStocks } from '../../Models/WatchList';
 import { Sector } from '../../Models/Sector';
-
+import { mutualfundsholdingsService } from '../../Services/mutualfundsholdings.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatSelectModule} from '../../../../node_modules/@angular/material/select';
@@ -25,7 +25,8 @@ export class ScreenerComponent implements AfterViewInit   {
     private _watchListStocksService: WatchListStocksService, 
     private _grid : gridComponent,
     private _stocksService : StocksService,
-    private _watchListService: WatchListsService ) 
+    private _watchListService: WatchListsService,
+    private _mutualfundsholdingsService: mutualfundsholdingsService ) 
     {       
     }   
 
@@ -33,6 +34,7 @@ export class ScreenerComponent implements AfterViewInit   {
       this.getSectors();
       this.getStockSegements();
       this.getPriceRanges();
+      this.getHoldingsData();
     }
 
     name: string = '';
@@ -40,11 +42,13 @@ export class ScreenerComponent implements AfterViewInit   {
     sectorsList : Sector[] = [];
     stockSegements : DropDownModel[] = [];
     priceRanges : DropDownModel[] = [];
+    StocksData : HoldingsGrid[] = [];
+    HoldingsData: HoldingsGrid[] = [];
 
-    sectorsChanged(data) 
-    {
-      alert(data);
-    }
+    SegementSelected : string = "All";
+    priceRangeSelected : string = "All";
+    sectorSelected: string = "All";
+   
 
     getSectors()
     {
@@ -59,9 +63,9 @@ export class ScreenerComponent implements AfterViewInit   {
         this.sectors.push(element.sectorName);
     });
   });
-    }
+  }
 
-    getStockSegements()
+getStockSegements()
 {
   let config = new configuration();
  this.stockSegements =  config.GetSegements();
@@ -75,8 +79,71 @@ getPriceRanges()
 
 segementsChanged(data : DropDownModel)
 {
-alert("rr");
+  this.SegementSelected = data.name;
+  this.filterData(data.name, 1);
 }
+
+filterData(value, changeby)
+{
+  this.HoldingsData = [];
+   this.StocksData.forEach(element => {  
+     if(this.SegementSelected != "All")
+     {
+      if(element.mcapCategory == this.SegementSelected)
+      {
+        this.HoldingsData.push(element);
+      }
+    }
+    
+    if(this.priceRangeSelected != "All")
+    {
+      if(element.mcapCategory == this.priceRangeSelected)
+      {
+        this.HoldingsData.push(element);
+      }
+    }
+    
+    if (this.sectorSelected != "All")
+    {
+      if(element.sector == this.sectorSelected)
+      {
+        this.HoldingsData.push(element);
+      }
+    }else
+    {
+
+    }
+
+
+     });
+   //}
+}
+
+priceRangeChanged(data : DropDownModel)
+{
+  this.priceRangeSelected = data.name;
+  this.filterData(data.name, 2);
+}
+
+sectorsChanged(data : string)
+{
+  this.sectorSelected = data;
+  this.filterData(data, 3);
+}
+
+getHoldingsData(): any {
+  this._mutualfundsholdingsService.getAll()
+    .subscribe(
+      restItems => {
+        this.HoldingsData = restItems.body;
+        this.StocksData = restItems.body;
+        //console.log(this.restItems);
+      }
+    )
+
+   // return this.restItems;
+}
+
 
     modifySectorstoStringArray()
     {      
@@ -85,7 +152,15 @@ alert("rr");
       });
     }
 
-    // mat code
+
+
+    HoldingscolumnDefs = [
+      { headerName: 'Sector', field: 'sector', sortable: true, filter: true},
+      { headerName: 'stock Name', field: 'stockName', sortable: true, filter: true},
+      { headerName: 'Market cap', field: 'mcap', sortable: true, filter: true},
+      { headerName: 'Segements', field: 'mcapCategory', sortable: true, filter: true}
+     
+    ];
 
     
   // options: string[] = ['One', 'Two', 'Three','One', 'Two', 'Three','One', 'Two', 'Three','One', 'Two', 'Three','One', 'Two', 'Three','One', 'Two', 'Three'];

@@ -43,7 +43,7 @@ export class configuration
          name : 'Mid Cap'
         },
         {
-            id : 2,
+            id : 3,
          name : 'Small Cap'
         }
      ];

@@ -1,7 +1,7 @@
 <mat-form-field style="background-color:black" >
     <mat-select style="color: red" panelClass="example-long-panel" name="education_level" placeholder="Select Level of Education"
     [(ngModel)]="education_level"  (selectionChange)="educationLevelChangeAction(education_level)">
-        <mat-option style="color: red" >--</mat-option>
+        <mat-option style="color: red" >All</mat-option>
         <mat-option style="color: red" *ngFor="let item of values" [value]="item">
           {{item.name}}
         </mat-option>

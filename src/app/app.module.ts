@@ -27,6 +27,7 @@ import { filterStocksbyWatchListPipe } from './Pipes/FilterStocksByWatchList.pip
 import {MatAutocompleteModule,} from '@angular/material/autocomplete';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [AppComponent,MutualFundHoldingComponent,
@@ -37,7 +38,7 @@ import {MatInputModule} from '@angular/material/input';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,ReactiveFormsModule,
-    MatSelectModule,MatAutocompleteModule,MatFormFieldModule,MatInputModule,
+    MatSelectModule,MatAutocompleteModule,MatFormFieldModule,MatInputModule,MatTabsModule,
     AgGridModule.withComponents([]),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
