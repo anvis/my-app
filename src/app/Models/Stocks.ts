@@ -10,4 +10,5 @@ export class Stocks {
     stockName:string;
     mcap:string;
     mcapCategory:string;
+    closePrice: number;
   }

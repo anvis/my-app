@@ -44,11 +44,15 @@ export class ScreenerComponent implements AfterViewInit   {
     priceRanges : DropDownModel[] = [];
     StocksData : HoldingsGrid[] = [];
     HoldingsData: HoldingsGrid[] = [];
+    tempHoldingdata : HoldingsGrid[] = [];
 
     SegementSelected : string = "All";
     priceRangeSelected : string = "All";
     sectorSelected: string = "All";
    
+    filterSegements : Boolean = false;
+    filterPriceRange : Boolean = false;
+    filterSectors : Boolean = false;
 
     getSectors()
     {
@@ -69,66 +73,114 @@ getStockSegements()
 {
   let config = new configuration();
  this.stockSegements =  config.GetSegements();
+ 
 }
 
 getPriceRanges()
 {
   let config = new configuration();
  this.priceRanges =  config.GetPriceRanges();
+ 
 }
 
 segementsChanged(data : DropDownModel)
 {
   this.SegementSelected = data.name;
   this.filterData(data.name, 1);
+  this.filterSegements = true;
 }
 
 filterData(value, changeby)
 {
-  this.HoldingsData = [];
-   this.StocksData.forEach(element => {  
-     if(this.SegementSelected != "All")
-     {
-      if(element.mcapCategory == this.SegementSelected)
-      {
-        this.HoldingsData.push(element);
-      }
-    }
-    
-    if(this.priceRangeSelected != "All")
+ this.HoldingsData = [];
+ this.tempHoldingdata =  this.StocksData;
+ let data :  HoldingsGrid[] = [];
+ let data1 :  HoldingsGrid[] = [];
+ let data2 :  HoldingsGrid[] = [];
+debugger;
+  if(this.SegementSelected != "All")
+  {
+    data = this.tempHoldingdata.filter(x => x.mcapCategory == this.SegementSelected);    
+  }
+
+  if(this.sectorSelected != "All")
+  {
+    if(data.length == 0)
     {
-      if(element.mcapCategory == this.priceRangeSelected)
-      {
-        this.HoldingsData.push(element);
-      }
-    }
-    
-    if (this.sectorSelected != "All")
-    {
-      if(element.sector == this.sectorSelected)
-      {
-        this.HoldingsData.push(element);
-      }
+      data1 = this.tempHoldingdata.filter(x => x.sector == this.sectorSelected);
+      this.filterSectors = true;
     }else
     {
+      this.filterSegements = false;
+      this.filterSectors = true;
+      data1 = data.filter(x => x.sector == this.sectorSelected);
+    }    
+  }
 
+  if(this.priceRangeSelected != "All")
+  {
+    debugger;
+    var splitted = this.priceRangeSelected.split("-"); 
+    var lesserRange = Number(splitted[0]);
+    var highRange =Number( splitted[1]);
+
+    if(this.filterSegements)
+    {
+      data2 =  data.filter(x=>(x.closePrice > lesserRange && x.closePrice < highRange ));
+      this.filterPriceRange = true;
+      this.filterSegements = false;
+    }else if (this.filterSectors)
+    {
+      data2 =  data1.filter(x=>(x.closePrice > lesserRange && x.closePrice < highRange ));
+      this.filterPriceRange = true;
+      this.filterSectors = false;
+    }else{
+      data2 =  this.tempHoldingdata.filter(x=>(x.closePrice > lesserRange && x.closePrice < highRange ));
+      this.filterPriceRange = true;
     }
 
+  }
+  
+if(this.filterSegements)
+{
+  data.forEach(element => {  
+    this.HoldingsData.push(element);
+  });
 
-     });
-   //}
+}
+
+if(this.filterSectors)
+{
+  this.HoldingsData = [];  
+  data1.forEach(element => {  
+    this.HoldingsData.push(element);
+  });
+}
+
+if(this.filterPriceRange)
+{
+  this.HoldingsData = [];  
+  data2.forEach(element => {  
+    this.HoldingsData.push(element);
+  });
+}
+
+
 }
 
 priceRangeChanged(data : DropDownModel)
 {
   this.priceRangeSelected = data.name;
   this.filterData(data.name, 2);
+  this.filterPriceRange = true;
 }
 
 sectorsChanged(data : string)
 {
+  alert(data);
   this.sectorSelected = data;
   this.filterData(data, 3);
+  this.filterSectors = true;
 }
 
 getHoldingsData(): any {
